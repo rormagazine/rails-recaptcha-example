@@ -1,0 +1,35 @@
+<h1>My cool blog</h1>
+<p>Welcome to my blog where I write stuff. Mostly lipsums</p>
+
+<% @posts.each do |post| %>
+	
+	<div class="post">
+		<h2><%= post.title %></h2>
+		<p>
+			<%= post.text %>
+		</p>
+
+		<div class="comments">
+
+			<strong>Add a comment</strong><br/>
+			<%= form_for(@comment) do |f| %>
+				<%= f.label :name %><br/>
+				<%= f.text_field :name %><br/>
+				<%= f.label :text %><br/>
+				<%= f.text_area :text %><br/>
+				<%= f.hidden_field :post_id, value: post.id  %>
+				<div class="g-recaptcha" data-sitekey="6LcMgh8TAAAAAIAEFFPXGZHmOCFUJGKN2mIXM0CS"></div>
+				<%= f.submit "Reply" %>
+			<% end %>
+
+			<% post.comments.each do |comment| %>
+				<p>
+					<strong><%= comment.name %></strong><br/>
+					<%= comment.text %>
+				</p>
+				<hr/>
+			<% end %>
+		</div>
+	</div>
+	
+<% end %>
